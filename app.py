@@ -10,6 +10,9 @@ from datetime import datetime, timedelta
 from generate_data import start_log_generation
 start_log_generation()
 
+import os
+
+
 app = Flask(__name__)
 app.secret_key = 'secret_key'
 
@@ -20,6 +23,7 @@ USER_CREDENTIALS = {
 data_file = "web_sales_logs.csv"
 
 colors = ['#3498db', '#e74c3c', '#2ecc71', '#9b59b6', '#f1c40f', '#1abc9c', '#e67e22', '#34495e']
+
 
 def load_data():
     try:
@@ -376,5 +380,6 @@ def export_csv():
         return jsonify({"error": str(e)}), 500
 
 # Run app
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000)) 
+    app.run(host="0.0.0.0", port=port)
